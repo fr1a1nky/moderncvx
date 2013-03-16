@@ -1,0 +1,48 @@
+\ProvidesFile{moderncvstyle.lco}[\KOMAScriptVersion\space letter-class-option]
+
+% color:
+\usepackage{color}
+
+% symbols (letter, phone, cell phone)
+\usepackage{marvosym}
+
+% modern font:
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\renewcommand{\familydefault}{\sfdefault}
+
+% moderncv colors: (casual theme)
+%\definecolor{addresscolor}{rgb}{0.35,0.35,0.35}
+%\definecolor{firstnamecolor}{rgb}{0.65,0.65,0.65}
+%\definecolor{familynamecolor}{rgb}{0.45,0.45,0.45}
+
+\newkomavar{fromacademictitle}
+%\newkomavar{fromname}
+\newkomavar{frommobile}
+
+\newkomafont{fromacademictitle}{\sffamily\mdseries\upshape\huge\fontsize{34}{36}\selectfont\color{titlecolor}}%was huge
+\setkomafont{fromname}{\sffamily\mdseries\upshape\huge\fontsize{34}{36}\selectfont\color{namecolor}}
+
+%\renewcommand*{\namefont}{\fontsize{34}{36}\mdseries\upshape}
+%\renewcommand*{\addressfont}{\small\mdseries\slshape}
+
+\setkomafont{fromaddress}{\small\slshape\color{addresscolor}}
+\setkomafont{subject}{\bfseries}
+
+\setkomavar{fromacademictitle}[]{a}
+\setkomavar{fromname}[]{b}
+\setkomavar{fromaddress}[]{}
+\setkomavar{frommobile}[\Mobilefone]{}
+\setkomavar{fromphone}[\Telefon]{}
+\setkomavar{fromemail}[\Letter]{}
+
+% This doesn't work, the name is not printed. Copy & paste it to the tex file, then it works.
+\firsthead{\flushright 
+	{\usekomafont{fromacademictitle} \usekomavar{fromacademictitle} \usekomafont{fromname} \usekomavar{fromname}} \\[-.35em]
+	{\color{titlecolor}\rule{\textwidth}{.25ex}}
+	%\normalsize\slshape\color{firstnamecolor}\rule{12mm}{.25ex} \\
+	\usekomafont{fromaddress} 
+	\usekomavar{fromaddress} \\ 
+	\usekomavar*{fromphone} \usekomavar{fromphone} \\ 
+	\usekomavar*{frommobile} \usekomavar{frommobile} \\
+	\usekomavar*{fromemail} \usekomavar{fromemail}}

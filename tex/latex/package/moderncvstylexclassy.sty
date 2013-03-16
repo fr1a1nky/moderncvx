@@ -1,0 +1,275 @@
+%% start of file `moderncvstylecasual.sty'.
+%% Copyright 2006-2012 Xavier Danaux (xdanaux@gmail.com).
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License version 1.3c,
+% available at http://www.latex-project.org/lppl/.
+
+
+%-------------------------------------------------------------------------------
+%                identification
+%-------------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{moderncvstylecasualfd}[2012/12/04 v1.2.1 modern curriculum vitae and letter style scheme: casual]
+
+
+%-------------------------------------------------------------------------------
+%                required packages
+%-------------------------------------------------------------------------------
+
+
+%-------------------------------------------------------------------------------
+%                package options
+%-------------------------------------------------------------------------------
+\RequirePackage{moderncvstylecasual}
+
+
+%-------------------------------------------------------------------------------
+%                overall style definition
+%-------------------------------------------------------------------------------
+% commands
+%   footer symbol used to separate footer elements
+%\newcommand*{\footersymbol}{%
+%    {~~~{\rmfamily\textbullet}~~~}}% the \rmfamily is required to force Latin Modern fonts when using sans serif, as OMS/lmss/m/n is not defined and gets substituted by OMS/cmsy/m/n
+%%   internal command to add an element to the footer
+%%   it collects the elements in a temporary box, and checks when to flush the box
+%\newsavebox{\footerbox}%
+%\newsavebox{\footertempbox}%
+%\newlength{\footerwidth}%
+%\newlength{\footerboxwidth}%
+%\newif\if@firstfooterelement\@firstfooterelementtrue%
+%%   adds an element to the footer, separated by footersymbol
+%%   usage: \addtofooter[footersymbol]{element}
+%\newcommand*{\addtofooter}[2][\footersymbol]{%
+%  \if@firstfooterelement%
+%    \savebox{\footertempbox}{\usebox{\footerbox}#2}%
+%  \else%
+%    \savebox{\footertempbox}{\usebox{\footerbox}#1#2}\fi%
+%  \settowidth{\footerboxwidth}{\usebox{\footertempbox}}%
+%  \ifnum\footerboxwidth<\footerwidth%
+%    \savebox{\footerbox}{\usebox{\footertempbox}}%
+%    \@firstfooterelementfalse%
+%  \else%
+%    \flushfooter\\%
+%    \savebox{\footerbox}{#2}%
+%    \savebox{\footertempbox}{#2}%
+%    \settowidth{\footerboxwidth}{\usebox{\footerbox}}%
+%    \@firstfooterelementfalse\fi}
+%%   internal command to flush the footer
+%\newcommand*{\flushfooter}{%
+%  \strut\usebox{\footerbox}%
+%  \savebox{\footerbox}{}%
+%  \savebox{\footertempbox}{}%
+%  \setlength{\footerboxwidth}{0pt}}
+
+
+%-------------------------------------------------------------------------------
+%                resume style definition
+%-------------------------------------------------------------------------------
+% fonts
+%\renewcommand*{\namefont}{\fontsize{38}{40}\mdseries\upshape}
+%\renewcommand*{\addressfont}{\normalsize\mdseries\slshape}
+
+% fd
+
+\renewcommand*{\addressfont}{\normalsize\mdseries\slshape}
+
+\newcommand*{\academictitle}[1]{\def\@academictitle{#1}}
+
+% commands
+\renewcommand*{\makecvtitle}{%
+  % recompute lengths (in case we are switching from letter to resume, or vice versa)
+  \recomputecvlengths%
+  % ensure footer with personal information
+  \makecvfooter%
+  % optional picture
+  % name
+    {\hfill\raggedleft\namefont{\color{color2!50}\@academictitle} {\color{color2}\@firstname\ \@familyname}}\\[-.35em]% alternate design: \MakeLowercase and no space
+  {\color{color2!50}\rule{\textwidth}{.25ex}}%
+  % optional title
+  \ifthenelse{\equal{\@title}{}}{}{\\[1.25em]\null\hfill\titlestyle{\@title}}\\[2.5em]% \null is required as there is no box on the line after \\, so glue (and leaders) disappears; this is in contrast to after \par, where the next line starts with an indent box (even after \noindent).
+  % optional quote
+  \ifthenelse{\isundefined{\@quote}}%
+    {}%
+    {{\null\hfill\begin{minipage}{\quotewidth}\centering\quotestyle{\@quote}\end{minipage}\hfill\null\\[2.5em]}}%
+  \par}% to avoid weird spacing bug at the first section if no blank line is left after \maketitle
+
+\newcommand*{\makepersonal}[1]{
+  \newbox{\makecvtitlepicturebox}%
+  \savebox{\makecvtitlepicturebox}{%
+    \ifthenelse{\isundefined{\@photo}}%
+      {}%
+      {%
+       \setlength\fboxrule{\@photoframewidth}%
+       \ifdim\@photoframewidth=0pt%
+         \setlength{\fboxsep}{0pt}\fi%
+       {\color{color1}\framebox{\includegraphics[width=\@photowidth]{\@photo}}}}}%
+  \@initializelength{\makecvtitlepicturewidth}%
+  \settowidth{\makecvtitlepicturewidth}{\usebox{\makecvtitlepicturebox}}%
+  \begin{minipage}[t]{\textwidth-\makecvtitlepicturewidth}
+  #1
+  \end{minipage}
+  \begin{minipage}{\makecvtitlepicturewidth}
+  \usebox{\makecvtitlepicturebox}%
+  \end{minipage}
+}
+
+% commands
+%\renewcommand*{\makecvtitle}{%
+%  % recompute lengths (in case we are switching from letter to resume, or vice versa)
+%  \recomputecvlengths%
+%  % ensure footer with personal information
+%  \makecvfooter%
+%  % optional picture
+%  \newbox{\makecvtitlepicturebox}%
+%  \savebox{\makecvtitlepicturebox}{%
+%    \ifthenelse{\isundefined{\@photo}}%
+%      {}%
+%      {%
+%       \setlength\fboxrule{\@photoframewidth}%
+%       \ifdim\@photoframewidth=0pt%
+%         \setlength{\fboxsep}{0pt}\fi%
+%       {\color{color1}\framebox{\includegraphics[width=\@photowidth]{\@photo}}}}}%
+%  % name
+%  \@initializelength{\makecvtitlepicturewidth}%
+%  \settowidth{\makecvtitlepicturewidth}{\usebox{\makecvtitlepicturebox}}%
+%  \begin{minipage}[b]{\textwidth-\makecvtitlepicturewidth}
+%  %\parbox[b]{\textwidth-\makecvtitlepicturewidth}{%
+%    \raggedright\namefont{\color{color2!50}\@academictitle\\} {\color{color2}\@firstname\ \@familyname}%}\\[-.35em]% alternate design: \MakeLowercase and no space
+%    \hfill
+%  \end{minipage}
+%  \begin{minipage}[b]{\makecvtitlepicturewidth}
+%  \usebox{\makecvtitlepicturebox}
+%  \end{minipage}
+%  \\[-.35em]%
+%  {\color{color2!50}\rule{\textwidth}{.25ex}}%
+%  % optional title
+%  \ifthenelse{\equal{\@title}{}}{}{\\[1.25em]\null\titlestyle{\@title}}\\[2.5em]% \null is required as there is no box on the line after \\, so glue (and leaders) disappears; this is in contrast to after \par, where the next line starts with an indent box (even after \noindent).
+%  % optional quote
+%  \ifthenelse{\isundefined{\@quote}}%
+%    {}%
+%    {{\null\hfill\begin{minipage}{\quotewidth}\centering\quotestyle{\@quote}\end{minipage}\hfill\null\\[2.5em]}}%
+%  \par}% to avoid weird spacing bug at the first section if no blank line is left after \maketitle
+
+\renewcommand*{\makecvfooter}{%
+  \setlength{\footerwidth}{0.8\textwidth}%
+  \fancypagestyle{plain}{%
+    \fancyfoot[c]{%
+      \parbox[b]{\footerwidth}{%
+        \centering%
+        \color{color2}\addressfont%
+        \addtofooter[]{\@firstname\ \@familyname}
+        \ifthenelse{\isundefined{\@addressstreet}}{}{\addtofooter{\addresssymbol\@addressstreet}%
+          \ifthenelse{\equal{\@addresscity}{}}{}{\addtofooter{\@addresscity}}\flushfooter\@firstfooterelementtrue\\}% if \addresstreet is defined, \addresscity will always be defined but could be empty
+        \ifthenelse{\isundefined{\@phone}}{}{\addtofooter{\phonesymbol\@phone}}%
+        \ifthenelse{\isundefined{\@mobile}}{}{\addtofooter{\mobilesymbol\@mobile}}%
+        \ifthenelse{\isundefined{\@fax}}{}{\addtofooter{\faxsymbol\@fax}}%
+        \ifthenelse{\isundefined{\@email}}{}{\addtofooter{\emailsymbol\emaillink{\@email}}}%
+        \ifthenelse{\isundefined{\@homepage}}{}{\addtofooter{\homepagesymbol\httplink{\@homepage}}}%
+        \ifthenelse{\isundefined{\@extrainfo}}{}{\addtofooter{\@extrainfo}}%
+        \ifthenelse{\lengthtest{\footerboxwidth=0pt}}{}{\flushfooter}% the lengthtest is required to avoid flushing an empty footer, which could cause a blank line due to the \\ after the address, if no other personal info is used
+        }}}%
+  \pagestyle{plain}}
+
+%-------------------------------------------------------------------------------
+% fd
+%-------------------------------------------------------------------------------
+
+\renewcommand*{\labelitemi}{\strut\textcolor{color4}{\marvosymbol{123}}}
+\renewcommand*{\listitemsymbol}{\labelitemi~}
+
+\renewcommand*{\sectionstyle}[1]{{\sectionfont\textcolor{color3}{#1}}}
+\renewcommand*{\subsectionstyle}[1]{{\subsectionfont\textcolor{color3}{#1}}}
+
+\renewcommand*{\section}[1]{%
+  \par\addvspace{2.5ex}%
+  \phantomsection{}% reset the anchor for hyperrefs
+  \addcontentsline{toc}{section}{#1}%
+  \parbox[t]{\hintscolumnwidth}{\strut\raggedleft\raisebox{0ex}{\color{color1}\rule{\hintscolumnwidth}{0.25ex}}}%
+  \hspace{\separatorcolumnwidth}%
+  \parbox[t]{\maincolumnwidth}{\strut\sectionstyle{#1}}%
+  \par\nobreak\addvspace{1ex}\@afterheading}% to avoid a pagebreak after the heading
+
+\renewcommand*{\subsection}[1]{%
+  \par\addvspace{1ex}%
+  \phantomsection{}% reset the anchor for hyperrefs
+  \addcontentsline{toc}{subsection}{#1}%
+  \begin{tabular}{@{}p{\hintscolumnwidth}@{\hspace{\separatorcolumnwidth}}p{\maincolumnwidth}@{}}%
+ 	  \raggedleft\hintstyle{} &{\strut\subsectionstyle{#1}}%
+  \end{tabular}%
+  \par\nobreak\addvspace{0.5ex}\@afterheading}% to avoid a pagebreak after the heading
+  
+\renewcommand*{\cventry}[7][.25em]{%
+  \cvitem[#1]{#2}{%
+    {\bfseries#3}%
+    \ifthenelse{\equal{#4}{}}{}{, {#4}}%
+    \ifthenelse{\equal{#5}{}}{}{, #5}%
+    \ifthenelse{\equal{#6}{}}{}{, #6}%
+    .\strut%
+    \ifx&#7&%
+      \else{\newline{}\begin{minipage}[t]{\linewidth}\small#7\end{minipage}}\fi}}
+    
+\renewcommand*{\cvlistdoubleitem}[3][.25em]{%
+  \cvitem[#1]{}{\listitemsymbol\begin{minipage}[t]{\listdoubleitemmaincolumnwidth}\raggedright#2\end{minipage}%
+  \hfill% fill of \separatorcolumnwidth
+  \ifthenelse{\equal{#3}{}}%
+    {}%
+    {\listitemsymbol\begin{minipage}[t]{\listdoubleitemmaincolumnwidth}\raggedright#3\end{minipage}}}}
+
+
+%-------------------------------------------------------------------------------
+%                letter style definition
+%-------------------------------------------------------------------------------
+\renewcommand*{\recomputeletterlengths}{%
+  \recomputecvlengths%
+  \setlength{\parskip}{6\p@}}
+
+\renewcommand*{\makelettertitle}{%
+  % recompute lengths (in case we are switching from letter to resume, or vice versa)
+  \recomputeletterlengths%
+  % sender contact info
+  \hfill%
+  \begin{minipage}{.5\textwidth}%
+    \raggedleft%
+    \addressfont\textcolor{color2}{%
+      {\bfseries\upshape\@firstname~\@familyname}\@firstdetailselementfalse%
+      \ifthenelse{\isundefined{\@addressstreet}}{}{\makenewline\addresssymbol\@addressstreet%
+        \ifthenelse{\equal{\@addresscity}{}}{}{\makenewline\@addresscity}}%
+      \ifthenelse{\isundefined{\@mobile}}{}{\makenewline\mobilesymbol\@mobile}%
+      \ifthenelse{\isundefined{\@phone}}{}{\makenewline\phonesymbol\@phone}%
+      \ifthenelse{\isundefined{\@fax}}{}{\makenewline\faxsymbol\@fax}%
+      \ifthenelse{\isundefined{\@email}}{}{\makenewline\emailsymbol\emaillink{\@email}}%
+      \ifthenelse{\isundefined{\@homepage}}{}{\makenewline\homepagesymbol\httplink{\@homepage}}%
+      \ifthenelse{\isundefined{\@extrainfo}}{}{\makenewline\@extrainfo}}%
+    \end{minipage}\\[1em]
+  % recipient block
+  \begin{minipage}[t]{.5\textwidth}
+    \raggedright%
+    \addressfont%
+    {\bfseries\upshape\@recipientname}\\%
+    \@recipientaddress%
+  \end{minipage}
+  % date
+  \hfill% US style
+%  \\[1em]% UK style
+  \@date\\[2em]% US informal style: "January 1, 1900"; UK formal style: "01/01/1900"
+  % opening
+  \raggedright%
+  \@opening\\[1.5em]%
+  % ensure no extra spacing after \makelettertitle due to a possible blank line
+%  \ignorespacesafterend% not working
+  \hspace{0pt}\par\vspace{-\baselineskip}\vspace{-\parskip}}
+
+\renewcommand*{\makeletterclosing}{
+  \@closing\\[3em]%
+  {\bfseries \@firstname~\@familyname}%
+  \ifthenelse{\isundefined{\@enclosure}}{}{%
+    \\%
+    \vfill%
+    {\color{color2}\itshape\enclname: \@enclosure}}}
+
+
+\endinput
+
+
+%% end of file `moderncvstylecasual.sty'.
