@@ -1,0 +1,55 @@
+\ProvidesFile{moderncvstyle.lco}[\KOMAScriptVersion\space letter-class-option]
+
+% color:
+\RequirePackage{xcolor}
+
+% calculate lengths:
+\RequirePackage{calc}
+
+% symbols (letter, phone, cell phone)
+\RequirePackage{marvosym}
+
+% modern font:
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+
+% define moderncv-like commands to set style and color:
+\newcommand*{\moderncvstyle}[1]{\RequirePackage{moderncvstyle#1}}
+\newcommand*{\moderncvcolor}[1]{\RequirePackage{moderncvcolor#1}}
+
+% set sans serif font
+\renewcommand{\familydefault}{\sfdefault}
+
+% koma variables
+\newkomavar{fromacademictitle}
+\newkomavar{frommobile}
+
+\newkomafont{fromacademictitle}{\sffamily\mdseries\upshape\huge\color{titlecolor}}
+\setkomafont{fromname}{\sffamily\mdseries\upshape\huge\color{namecolor}}
+
+\setkomafont{fromaddress}{\normalsize\slshape\color{addresscolor}}
+\setkomafont{subject}{\bfseries}
+
+\setkomavar{fromacademictitle}[]{a}
+\setkomavar{fromname}[]{b}
+\setkomavar{fromaddress}[]{}
+\setkomavar{frommobile}[\Mobilefone]{}
+\setkomavar{fromphone}[\Telefon]{}
+\setkomavar{fromemail}[\Letter]{}
+
+% letterhead
+\newlength{\titleplusnamewidth}
+\firsthead{
+	\settowidth{\titleplusnamewidth}{{\usekomafont{fromacademictitle} \usekomavar{fromacademictitle} \usekomafont{fromname} \usekomavar{fromname}}}
+	\hfill
+	\begin{minipage}[b]{\titleplusnamewidth}
+		\flushright
+		{\usekomafont{fromacademictitle} \usekomavar{fromacademictitle} \usekomafont{fromname} \usekomavar{fromname}} \\[-.35em]
+		{\color{titlecolor}\rule{\titleplusnamewidth}{.25ex}}\\
+		\usekomafont{fromaddress} 
+		\usekomavar{fromaddress} \\ 
+		\usekomavar*{fromphone} \usekomavar{fromphone} \\ 
+		\usekomavar*{frommobile} \usekomavar{frommobile} \\
+		\usekomavar*{fromemail} \usekomavar{fromemail}
+	\end{minipage}
+}
