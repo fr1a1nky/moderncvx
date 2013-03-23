@@ -10,7 +10,7 @@
 %                identification
 %-------------------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{moderncvstylecasualfd}[2012/12/04 v1.2.1 modern curriculum vitae and letter style scheme: casual]
+\ProvidesPackage{moderncvstylexcasual}[2]
 
 
 %-------------------------------------------------------------------------------
@@ -22,53 +22,6 @@
 %                package options
 %-------------------------------------------------------------------------------
 \RequirePackage{moderncvstylecasual}
-
-
-%-------------------------------------------------------------------------------
-%                overall style definition
-%-------------------------------------------------------------------------------
-% commands
-%   footer symbol used to separate footer elements
-%\newcommand*{\footersymbol}{%
-%    {~~~{\rmfamily\textbullet}~~~}}% the \rmfamily is required to force Latin Modern fonts when using sans serif, as OMS/lmss/m/n is not defined and gets substituted by OMS/cmsy/m/n
-%%   internal command to add an element to the footer
-%%   it collects the elements in a temporary box, and checks when to flush the box
-%\newsavebox{\footerbox}%
-%\newsavebox{\footertempbox}%
-%\newlength{\footerwidth}%
-%\newlength{\footerboxwidth}%
-%\newif\if@firstfooterelement\@firstfooterelementtrue%
-%%   adds an element to the footer, separated by footersymbol
-%%   usage: \addtofooter[footersymbol]{element}
-%\newcommand*{\addtofooter}[2][\footersymbol]{%
-%  \if@firstfooterelement%
-%    \savebox{\footertempbox}{\usebox{\footerbox}#2}%
-%  \else%
-%    \savebox{\footertempbox}{\usebox{\footerbox}#1#2}\fi%
-%  \settowidth{\footerboxwidth}{\usebox{\footertempbox}}%
-%  \ifnum\footerboxwidth<\footerwidth%
-%    \savebox{\footerbox}{\usebox{\footertempbox}}%
-%    \@firstfooterelementfalse%
-%  \else%
-%    \flushfooter\\%
-%    \savebox{\footerbox}{#2}%
-%    \savebox{\footertempbox}{#2}%
-%    \settowidth{\footerboxwidth}{\usebox{\footerbox}}%
-%    \@firstfooterelementfalse\fi}
-%%   internal command to flush the footer
-%\newcommand*{\flushfooter}{%
-%  \strut\usebox{\footerbox}%
-%  \savebox{\footerbox}{}%
-%  \savebox{\footertempbox}{}%
-%  \setlength{\footerboxwidth}{0pt}}
-
-
-%-------------------------------------------------------------------------------
-%                resume style definition
-%-------------------------------------------------------------------------------
-% fonts
-%\renewcommand*{\namefont}{\fontsize{38}{40}\mdseries\upshape}
-%\renewcommand*{\addressfont}{\normalsize\mdseries\slshape}
 
 % fd
 
@@ -209,60 +162,3 @@
     {}%
     {\listitemsymbol\begin{minipage}[t]{\listdoubleitemmaincolumnwidth}\raggedright#3\end{minipage}}}}
 
-
-%-------------------------------------------------------------------------------
-%                letter style definition
-%-------------------------------------------------------------------------------
-\renewcommand*{\recomputeletterlengths}{%
-  \recomputecvlengths%
-  \setlength{\parskip}{6\p@}}
-
-\renewcommand*{\makelettertitle}{%
-  % recompute lengths (in case we are switching from letter to resume, or vice versa)
-  \recomputeletterlengths%
-  % sender contact info
-  \hfill%
-  \begin{minipage}{.5\textwidth}%
-    \raggedleft%
-    \addressfont\textcolor{color2}{%
-      {\bfseries\upshape\@firstname~\@familyname}\@firstdetailselementfalse%
-      \ifthenelse{\isundefined{\@addressstreet}}{}{\makenewline\addresssymbol\@addressstreet%
-        \ifthenelse{\equal{\@addresscity}{}}{}{\makenewline\@addresscity}}%
-      \ifthenelse{\isundefined{\@mobile}}{}{\makenewline\mobilesymbol\@mobile}%
-      \ifthenelse{\isundefined{\@phone}}{}{\makenewline\phonesymbol\@phone}%
-      \ifthenelse{\isundefined{\@fax}}{}{\makenewline\faxsymbol\@fax}%
-      \ifthenelse{\isundefined{\@email}}{}{\makenewline\emailsymbol\emaillink{\@email}}%
-      \ifthenelse{\isundefined{\@homepage}}{}{\makenewline\homepagesymbol\httplink{\@homepage}}%
-      \ifthenelse{\isundefined{\@extrainfo}}{}{\makenewline\@extrainfo}}%
-    \end{minipage}\\[1em]
-  % recipient block
-  \begin{minipage}[t]{.5\textwidth}
-    \raggedright%
-    \addressfont%
-    {\bfseries\upshape\@recipientname}\\%
-    \@recipientaddress%
-  \end{minipage}
-  % date
-  \hfill% US style
-%  \\[1em]% UK style
-  \@date\\[2em]% US informal style: "January 1, 1900"; UK formal style: "01/01/1900"
-  % opening
-  \raggedright%
-  \@opening\\[1.5em]%
-  % ensure no extra spacing after \makelettertitle due to a possible blank line
-%  \ignorespacesafterend% not working
-  \hspace{0pt}\par\vspace{-\baselineskip}\vspace{-\parskip}}
-
-\renewcommand*{\makeletterclosing}{
-  \@closing\\[3em]%
-  {\bfseries \@firstname~\@familyname}%
-  \ifthenelse{\isundefined{\@enclosure}}{}{%
-    \\%
-    \vfill%
-    {\color{color2}\itshape\enclname: \@enclosure}}}
-
-
-\endinput
-
-
-%% end of file `moderncvstylecasual.sty'.
